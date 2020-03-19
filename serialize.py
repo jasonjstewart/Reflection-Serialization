@@ -13,8 +13,6 @@ LEVEL = 0
 OUTPUT=""
 file= ''
 
-#create a bool that is true add comma if not then nothing
-
 def addComma(bool):
     if bool==True:
         return ','
@@ -35,28 +33,20 @@ def to_json_float(string, obj, level, comma):
     print(TAB*(level+1)+putInQuotes(string)+': '+str(obj.__dict__[string])+addComma(comma))
 
 def to_json_bool(string, obj, level, comma):
-    #return output+TAB*(level+1)+putInQuotes(string)+': '+str(obj.__dict__[string]).lower()+COMMA+NEWLINE
     file.write(NEWLINE+TAB*(level+1)+putInQuotes(string)+': '+str(obj.__dict__[string]).lower()+addComma(comma))
     print(TAB*(level+1)+putInQuotes(string)+': '+str(obj.__dict__[string]).lower()+addComma(comma))
 
 def to_json_int(string, obj, level, comma):
-    #return output+TAB*(level+1)+putInQuotes(string)+': '+str(obj.__dict__[string])+COMMA+NEWLINE
     file.write(NEWLINE+TAB*(level+1)+putInQuotes(string)+': '+str(obj.__dict__[string])+addComma(comma))
     print(TAB*(level+1)+putInQuotes(string)+': '+str(obj.__dict__[string])+addComma(comma))
 
 def to_json_obj(item, obj, level, comma):
-    # print(obj)
-    # print(obj.__class__.__qualname__.lower())
-    # print(item)
-    # output = output + TAB*(level+1) + putInQuotes(str(item))+': {'+NEWLINE
     file.write(NEWLINE+TAB*(level+1) + putInQuotes(str(item))+': {')
     print(TAB*(level+1) + putInQuotes(str(item))+': {')
-    #output= output+ to_json(obj.__dict__[item], level=level+1)
     to_json(obj.__dict__[item], level=level+1)
     if level- LEVEL<0:
         file.write(NEWLINE+TAB*(level+1)+'}'+addComma(comma))
         print(TAB*(level+1)+'}'+addComma(comma)) 
-    #return output
 
 functions= {
     'str': to_json_str,
@@ -87,8 +77,6 @@ def to_json(obj, level=0):
     count1=0
     count2=0
     comma=True
-    # if level-LEVEL>0:
-    #     print(TAB*(level)+'}'+addComma(True)) 
     if level- LEVEL<0:
         file.write(NEWLINE+TAB*(level)+'}'+addComma(False))
         print(TAB*(level)+'}'+addComma(False)) 
@@ -100,7 +88,6 @@ def to_json(obj, level=0):
         if count1==count2:
             comma=False
         if obj.__dict__[item] is None or obj.__dict__[item]=='nil' or obj.__dict__[item]=='null':
-            #OUTPUT=OUTPUT+TAB*(level+1)+putInQuotes(item)+ ': null'
             file.write(NEWLINE+TAB*(level+1)+putInQuotes(item)+ ': null'+addComma(comma))
             print(TAB*(level+1)+putInQuotes(item)+ ': null'+addComma(comma))
         else:
